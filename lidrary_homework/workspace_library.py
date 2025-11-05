@@ -1,9 +1,11 @@
-
+# 2 удаление по номеру или по
+# названию,# 4 поиск книги по номеру или по названию или по дате издания.
 try:
     myfile = open('book.txt', 'r')
 except FileNotFoundError:
+    print("Файл не открыт")
     myfile = open("book.txt", "a")
-books = {}
+books_list = {}
 
 while True:
     print("\nМЕНЮ:")
@@ -13,88 +15,68 @@ while True:
     print("4 - Показать все")
     print("5 - Удалить все")
     print("6 - Выйти")
+    print("7 - Замена")
 
-    search = int(input("Ваш выбор: "))
+    search = int(input("Ваш выбор:"))
 
     if search == 1:
-        year = input("Год: ")
-        title = input("Название: ")
-        books[year] = title
-        number = len(books)
+        try:
+            year = input("Год: ")
+            title = input("Название: ")
+        except SyntaxError:
+            print("Год не может быть набором букв, а название не может быть в цифрах")
+        books_list[year] = title
+        number = len(books_list)
 
         with open("book.txt", "a", encoding="utf-8") as myfile:
             myfile.write(f"{number}.{year}\n{title}\n\n")
 
         print("Добавлено.")
 
+
     elif search == 2:
+
         method = int(input("Удалить по: 1 - номеру, 2 - году, 3 - названию: "))
-        with open("book.txt", "r", encoding="utf-8") as f:
-            lines = f.readlines()
-
-        books_list = []
-        for i in range(0, len(lines), 3):
-            if i + 1 < len(lines):
-                number_year = lines[i].strip()
-                title = lines[i + 1].strip()
-                number, year = number_year.split(".")
-                books_list.append({"number": int(number), "year": year, "title": title})
-
+        value_to_delete = None
         if method == 1:
-            num = int(input("Введите номер книги для удаления: "))
-            books_list = [b for b in books_list if b["number"] != num]
-
+            value_to_delete = int(input("Введите номер книги для удаления: "))
         elif method == 2:
-            year_del = input("Введите год книги для удаления: ")
-            books_list = [b for b in books_list if b["year"] != year_del]
-
+            value_to_delete = input("Введите год книги для удаления: ")
         elif method == 3:
-            title_del = input("Введите название книги для удаления: ")
-            books_list = [b for b in books_list if b["title"] != title_del]
-
-
-        for index, book in enumerate(books_list, 1):
-            book["number"] = index
-
+            value_to_delete = input("Введите название книги для удаления: ")
+        new_books_list = [
+            book for book in books_list
+            if not (
+                    (method == 1 and book["number"] == value_to_delete) or
+                    (method == 2 and book["year"] == value_to_delete) or
+                    (method == 3 and book["title"].lower() == value_to_delete.lower())
+            )
+        ]
         with open("book.txt", "w", encoding="utf-8") as f:
-            for book in books_list:
-                f.write(f"{book['number']}.{book['year']}\n{book['title']}\n\n")
-
+            for idx, book in enumerate(new_books_list, start=1):
+                f.write(f"{idx}.{book['year']}\\n{book['title']}\\n\\n")
         print("Удаление выполнено.")
 
 
 
     elif search == 3:
-        method_search = int(input("Искать по: 1 - номеру, 2 - году, 3 - названию: "))
-        with open("book.txt", "r", encoding="utf-8") as f:
-            lines = f.readlines()
 
-        books_list = []
-        for i in range(0, len(lines), 3):
-            if i + 1 < len(lines):
-                number_year = lines[i].strip()
-                title = lines[i + 1].strip()
-                number, year = number_year.split(".")
-                books_list.append({"number": int(number), "year": year, "title": title})
-
-        found = []
-        if method_search == 1:
-            num = int(input("Введите номер книги: "))
-            found = [b for b in books_list if b["number"] == num]
-
-        elif method_search == 2:
-            year_find = input("Введите год книги: ")
-            found = [b for b in books_list if b["year"] == year_find]
-
-        elif method_search == 3:
-            title_find = input("Введите название книги: ").lower()
-            found = [b for b in books_list if title_find in b["title"].lower()]
-
+        search_choice = int(input("Искать по: 1 - номеру, 2 - году, 3 - названию: "))
+        key_value = None
+        if search_choice == 1:
+            key_value = int(input("Введите номер книги: "))
+        elif search_choice == 2:
+            key_value = input("Введите год книги: ")
+        elif search_choice == 3:
+            key_value = input("Введите название книги: ").lower()
+        found = [book for book in books_list if str(book.get("number")) == str(key_value)]
         if found:
             for book in found:
-                print(f"{book['number']}. {book['year']} - {book['title']}")
+                print(f'Номер: {book["number"]}, Год: {book["year"]}, Название: {book["title"]}')
         else:
-            print("Книги по заданным условиям не найдены.")
+            print("Книга не найдена.")
+
+
 
 
 
@@ -109,5 +91,43 @@ while True:
     elif search == 6:
         print("Выход.")
 
-    else:
-        print("Неверный выбор.")
+
+
+
+    # elif search == 7:
+        
+        # NO WORK #
+        
+        
+        
+        
+        # edit_choice = int(input("Изменить запись по: 1 - номеру, 2 - году, 3 - названию: "))
+        # key_value = None
+        # if edit_choice == 1:
+        #     key_value = int(input("Введите номер книги: "))
+        # elif edit_choice == 2:
+        #     key_value = input("Введите год книги: ")
+        # elif edit_choice == 3:
+        #     key_value = input("Введите название книги: ").lower()
+        # found_book = None
+        # for book in books_list:
+        #     if edit_choice == 1 and book["number"] == key_value:
+        #         found_book = book
+        #         break
+        #     elif edit_choice == 2 and book["year"] == key_value:
+        #         found_book = book
+        #         break
+        #     elif edit_choice == 3 and book["title"].lower() == key_value:
+        #         found_book = book
+        #         break
+        # if found_book is not None:
+        #     new_title = input("Введите новое название книги: ")
+        #     new_year = input("Введите новый год публикации: ")
+        #     found_book["title"] = new_title
+        #     found_book["year"] = new_year
+        #     with open("book.txt", "w", encoding="utf-8") as file:
+        #         for i, book in enumerate(books_list, start=1):
+        #             file.write(f"{i}. {book['year']}\n{book['title']}\n\n")
+        #     print("Запись успешно изменена.")
+        # else:
+        #     print("Книга не найдена.")
