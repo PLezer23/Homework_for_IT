@@ -1,0 +1,35 @@
+def add_by_2_1(func):
+    def wrapper(a, b):
+        return func(a, b) + 2.1
+    return wrapper
+
+def subtract_by_2_1(func):
+    def wrapper(a, b):
+        return func(a, b) - 2.1
+    return wrapper
+
+def multiply_by_2_1(func):
+    def wrapper(a, b):
+        return func(a, b) * 2.1
+    return wrapper
+
+def divide_by_2_1(func):
+    def wrapper(a, b):
+        return func(a, b) / 2.1
+    return wrapper
+
+@add_by_2_1
+def add(a, b):
+    return a + b
+
+@subtract_by_2_1
+def subtract(a, b):
+    return a - b
+
+@multiply_by_2_1
+def multiply(a, b):
+    return a * b
+
+@divide_by_2_1
+def divide(a, b):
+    return a / b
