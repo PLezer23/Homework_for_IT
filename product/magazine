@@ -44,5 +44,16 @@ def count_calls(func):
     else:
         print(f"{name} не найден.")
 
+@count_callsdef show_products(products):
+    if not products:
+        print("Список продуктов пуст.")
+    else:
+        print("Продукты и их количество:")
+        for name, quantity in products.items():
+            print(f"{name}: {quantity}")
+
+
+
+
 
 
