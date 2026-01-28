@@ -51,6 +51,23 @@ def count_calls(func):
         print("Продукты и их количество:")
         for name, quantity in products.items():
             print(f"{name}: {quantity}")
+def main():
+    products = {}
+    while True:
+        display_menu()
+        choice = input("Выберите действие (1-5): ")
+        if choice == '1':
+            add_product(products)
+        elif choice == '2':
+            remove_product(products)
+        elif choice == '3':
+            change_quantity(products)
+        elif choice == '4':
+            show_products(products)
+        elif choice == '5':
+            print("Выход из программы.")
+            break        else:
+            print("Неверный выбор. Пожалуйста, попробуйте снова.")
 
 
 
