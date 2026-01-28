@@ -26,3 +26,11 @@ def count_calls(func):
     print(f"{name} добавлен с количеством {quantity}. Текущее количество: {products[name]}.")
 
 
+@count_callsdef remove_product(products):
+    name = input("Введите имя продукта для удаления: ")
+    if name in products:
+        del products[name]
+        print(f"{name} удален.")
+    else:
+        print(f"{name} не найден")
+
