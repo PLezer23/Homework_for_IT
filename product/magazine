@@ -12,7 +12,7 @@ def count_calls(func):
     wrapper.call_count = func.call_count
     return wrapper
 
-@menu_decoratordef display_menu():
+@menu_decorator def display_menu():
     print("1. Добавить продукт")
     print("2. Удалить продукт")
     print("3. Изменить количество продукта")
