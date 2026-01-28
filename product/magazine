@@ -18,3 +18,11 @@ def count_calls(func):
     print("3. Изменить количество продукта")
     print("4. Показать все продукты")
     print("5. Выйти")
+
+@count_callsdef add_product(products):
+    name = input("Введите имя продукта: ")
+    quantity = int(input("Введите количество продукта: "))
+    products[name] = products.get(name, 0) + quantity
+    print(f"{name} добавлен с количеством {quantity}. Текущее количество: {products[name]}.")
+
+
