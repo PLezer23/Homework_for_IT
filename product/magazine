@@ -34,3 +34,15 @@ def count_calls(func):
     else:
         print(f"{name} не найден")
 
+
+@count_callsdef change_quantity(products):
+    name = input("Введите имя продукта для изменения количества: ")
+    if name in products:
+        quantity = int(input("Введите новое количество: "))
+        products[name] = quantity
+        print(f"Количество {name} изменено на {quantity}.")
+    else:
+        print(f"{name} не найден.")
+
+
+
