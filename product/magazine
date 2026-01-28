@@ -71,6 +71,16 @@ def main():
 
 
 
+    print("\nСтатистика вызовов функций:")
+    print(f"add_product вызван {add_product.call_count} раз.")
+    print(f"remove_product вызван {remove_product.call_count} раз.")
+    print(f"change_quantity вызван {change_quantity.call_count} раз.")
+    print(f"show_products вызван {show_products.call_count} раз.")
+
+
+main()
+
+
 
 
 
