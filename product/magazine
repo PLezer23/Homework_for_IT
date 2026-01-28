@@ -1,0 +1,13 @@
+def menu_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("---Меню---")
+        func(*args, **kwargs)
+        print("---Конец Меню---")
+    return wrapper
+
+def count_calls(func):
+    func.call_count = 0    def wrapper(*args, **kwargs):
+        func.call_count += 1        return func(*args, **kwargs)
+
+    wrapper.call_count = func.call_count
+    return wrapper
